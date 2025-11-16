@@ -1,6 +1,6 @@
 # Compress Videos to ~10 MB (PowerShell + FFmpeg + AMD AMF)
 
-A PowerShell automation script that batch-compresses videos to approximately **10 MB or less**, while preserving folder structure, backing up originals, and using **AMD AMF hardware-accelerated HEVC encoding** for extremely fast results.
+A PowerShell automation script that batch-compresses videos to approximately **10 MB or less**, while preserving folder structure, backing up originals, and using **AMD AMF hardware-accelerated HEVC encoding** for fast results.
 
 Ideal for users who need small, shareable video files without sacrificing too much quality.
 
