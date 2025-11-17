@@ -31,8 +31,8 @@ Ideal for users who need small, shareable video files without sacrificing too mu
 | **Windows 10 / 11** | Any | Tested on both |
 
 ---
-## ⚙️ Setup Guide
-- 📦 [Installation & Setup](docs/SETUP_GUIDE.md)
+## ⚙️ Installation & Setup Guide
+- 📦 [Click Here](docs/SETUP_GUIDE.md)
 ---
 ## 🚀 Usage
 ### Run From PowerShell 7:
