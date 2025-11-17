@@ -35,7 +35,7 @@ Ideal for users who need small, shareable video files without sacrificing too mu
 
 ---
 
-## 🔧 Installation Guide
+## ⚙️ Installation Guide
 
 ### Windows
 #### 1. Install PowerShell 7.5+
@@ -188,7 +188,7 @@ Found X video file(s).
   Compressed size: 9.58 MB
      Done. Saved ~75.7 MB. Original moved to backup.
 ```
-## 🛠 How It Works (Technical Overview)
+## 🧠 How It Works (Technical Overview)
 The script performs the following:
 ### 1. Scans for supported video extensions
 ```powershell
