@@ -232,11 +232,16 @@ Then moves the compressed file -> original's place.
 > the script automatically falls back to CPU encoding with libx265.
 
 ## 📚 References
-PowerShell install:
+PowerShell install:  
 https://learn.microsoft.com/powershell/
 
-FFmpeg builds (Gyan.dev):
+FFmpeg builds (Gyan.dev):  
 https://www.gyan.dev/ffmpeg/builds/
 
-AMD AMF Encoder Docs:
+FFmpeg Documentation:  
+https://ffmpeg.org/documentation.html
+
+AMD AMF Encoder Docs:  
 https://github.com/GPUOpen-LibrariesAndSDKs/AMF
+
+
