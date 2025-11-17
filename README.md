@@ -224,19 +224,6 @@ clip001.mp4.tmp_compressed.mp4
 ### 7. Moves original -> backup
 Then moves the compressed file -> original's place.
 
-## 🐞 Common Issues found during initial build & Solutions
-✔ Paths with spaces  
-Fixed by fully quoting ffmpeg paths.
-
-✔ FFmpeg freezing + slowdown  
-Switched from CPU libx265 to GPU hevc_amf.
-
-✔ “Unable to infer output format”  
-Fixed by adding .mp4 to temp file.
-
-✔ Long videos still > 10MB  
-Script warns you but continues with safety bitrate.
-
 ## Notes:
 > **(GPU acceleration on Linux):**
 > This project’s Bash script tries to auto-detect GPU encoders (hevc_nvenc, hevc_vaapi, h264_qsv).
