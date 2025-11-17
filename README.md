@@ -21,18 +21,22 @@ Ideal for users who need small, shareable video files without sacrificing too mu
 
 ---
 
-## 🖥 Requirements
+## 🧰 Requirements
 
-| Component | Version | Notes |
-|----------|---------|-------|
-| **PowerShell Core (pwsh)** | 7.5+ | Script uses strict mode + modern features |
-| **FFmpeg** | Full build (2025 or later) | Must include `ffprobe` |
-| **AMD Drivers** | Latest | Required for `hevc_amf` encoder |
-| **Windows 10 / 11** | Any | Tested on both |
+| Component                  | Version           | Notes                                   |
+|---------------------------|-------------------|-----------------------------------------|
+| PowerShell Core (`pwsh`)  | 7.5+              | Uses strict mode + modern features      |
+| FFmpeg (full build)       | 2025 or later     | Must include `ffprobe`                  |
+| AMD Drivers               | Latest            | Required for `hevc_amf` hardware encode |
+| Windows                   | 10 / 11           | Tested on both                          |
 
 ---
 ## ⚙️ Installation & Setup Guide
-- 📦 [Click Here](docs/SETUP_GUIDE.md)
+
+For the full detailed setup steps, see:  
+
+➡️ [📦 Full Installation & Setup Guide](docs/SETUP_GUIDE.md)
+
 ---
 ## 🚀 Usage
 ### Run From PowerShell 7:
@@ -62,6 +66,12 @@ Found X video file(s).
   Compressed size: 9.58 MB
      Done. Saved ~75.7 MB. Original moved to backup.
 ```
+### Run from Bash (Linux/macOS)
+
+```bash
+chmod +x ./compress-videos-to-10mb.sh
+./compress-videos-to-10mb.sh
+```
 ---
 ## 🧠 How It Works (Technical Overview)
 The script performs the following:
@@ -70,10 +80,10 @@ The script performs the following:
 '.mp4', '.mkv', '.mov', '.avi', '.webm', '.m4v'
 ```
 ### 2. Uses ffprobe to calculate duration of video
-This is Required to compute thee correct bitrate
+This is Required to compute the correct bitrate
 
 ### 3. Determines a target size
-The Default is ~95% of 10MB to avoid going over.
+The default is ~95% of 10MB to avoid going over.
 
 ### 4. Calculates bitrate
 ```powershell
@@ -109,7 +119,13 @@ Then moves the compressed file -> original's place.
 > the script automatically falls back to CPU encoding with libx265.
 
 ---
+## 🛠️ Changelog
 
+See detailed patch notes and version history in:
+
+➡️ [CHANGELOG](CHANGELOG.md)
+
+--- 
 ## 📚 References
 PowerShell install:  
 https://learn.microsoft.com/powershell/
