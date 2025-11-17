@@ -27,6 +27,7 @@ function Test-CommandExists {
     catch {
         return $false
     }
+
 }
 
 Write-Host "=== Compress videos to ~10 MB and back up originals ===" -ForegroundColor Cyan
@@ -143,6 +144,56 @@ function Get-VideoDurationSeconds {
     return $duration
 }
 
+function Get-PreferredVideoEncoder {
+    <#
+        Returns the name of the preferred HEVC encoder based on what
+        ffmpeg reports as available.
+
+        Preference order:
+        1) hevc_amf   (AMD AMF on Windows)
+        2) hevc_nvenc (NVIDIA NVENC)
+        3) hevc_qsv   (Intel Quick Sync)
+        4) libx265    (CPU fallback)
+    #>
+    try {
+        $encodersOutput = & ffmpeg -hide_banner -encoders 2>$null
+        if (-not $encodersOutput) {
+            return 'libx265'
+        }
+
+        if ($encodersOutput -match '\bhevc_amf\b')   { return 'hevc_amf' }
+        if ($encodersOutput -match '\bhevc_nvenc\b') { return 'hevc_nvenc' }
+        if ($encodersOutput -match '\bhevc_qsv\b')   { return 'hevc_qsv' }
+
+        return 'libx265'
+    }
+    catch {
+        return 'libx265'
+    }
+}
+
+	# --- Choose video encoder (hardware if available) ---
+    $videoEncoder = Get-PreferredVideoEncoder
+    switch ($videoEncoder) {
+        'hevc_amf' {
+            $videoEncoderFlags = "-c:v hevc_amf -usage transcoding -quality speed -rc cbr"
+        }
+        'hevc_nvenc' {
+        # Generic NVENC settings; ffmpeg will still respect -b:v / -maxrate / -bufsize
+        $videoEncoderFlags = "-c:v hevc_nvenc -preset p4 -rc vbr"
+        }
+        'hevc_qsv' {
+        # Intel Quick Sync
+        $videoEncoderFlags = "-c:v hevc_qsv -preset medium"
+        }
+    default {
+        $videoEncoder      = 'libx265'
+        $videoEncoderFlags = "-c:v libx265 -preset medium"
+    }
+}
+
+Write-Host "Using video encoder: $videoEncoder" -ForegroundColor Cyan
+
 # --- Processing loop ---
 $index = 0
 $failures = @()
@@ -219,10 +270,11 @@ foreach ($file in $files) {
         $audioKbpsStr    = "${audioKbps}k"
 
         $ffmpegArgs = "-y -i `"$($file.FullName)`" " +
-              "-c:v hevc_amf -usage transcoding -quality speed -rc cbr " +
-              "-b:v $videoKbpsStr -maxrate $videoKbpsStr -bufsize $bufsizeKbpsStr " +
-              "-c:a aac -b:a $audioKbpsStr -movflags +faststart " +
-              "`"$tempPath`""
+             "$videoEncoderFlags " +
+             "-b:v $videoKbpsStr -maxrate $videoKbpsStr -bufsize $bufsizeKbpsStr " +
+             "-c:a aac -b:a $audioKbpsStr -movflags +faststart " +
+             "`"$tempPath`""
+
 
         Write-Host "  ffmpeg $ffmpegArgs" -ForegroundColor DarkGray
 
@@ -291,3 +343,4 @@ if ($failures.Count -gt 0) {
 else {
     Write-Host "All files processed successfully." -ForegroundColor Green
 }
+
